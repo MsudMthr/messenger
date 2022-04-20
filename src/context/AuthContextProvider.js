@@ -17,7 +17,7 @@ const AuthContextProvider = ({ children }) => {
         setLoading(false);
         setUser(user);
         console.log(user);
-        console.log(loading);
+        
         if (user) history.push("/chats");
       },
       

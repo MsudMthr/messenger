@@ -24,6 +24,7 @@ const Chats = () => {
       history.push("/");
       return;
     }
+
     axios
       .get("https://api.chatengine.io/users/me", {
         headers: {
@@ -39,22 +40,21 @@ const Chats = () => {
         formData.append("email", user.email);
         formData.append("username", user.email);
         formData.append("secret", user.uid);
-        formData.append("firs-name", user.displayName.split(" ")[0]);
-        formData.append("last-name", user.displayName.split(" ")[1]);
-        formData.append("secret", user.uid);
+
         getFile(user.photoURL).then((avatar) => {
           formData.append("avatar", avatar, avatar.name);
-          axios
-            .post("https://api.chatengine.io/users/", formData, {
-              headers: {
-                "private-key": "baa875c2-d664-4fa5-a1f4-599fe675ace6",
-              },
-            })
-            .then(() => setLoading(false))
-            .catch((error) => console.log(error));
         });
+        axios
+          .post("https://api.chatengine.io/users", formData, {
+            headers: {
+              "private-key": "982113b2-4898-4033-a91d-7d877dd5cbda",
+            },
+          })
+          .then(() => setLoading(false))
+          .catch((error) => console.log(error));
       });
   }, [user, history]);
+  console.log(loading);
 
   const getFile = async (url) => {
     const response = await fetch(url);
@@ -72,7 +72,7 @@ const Chats = () => {
         height="calc(100vh - 64px)"
         projectID="9d121b61-7ec9-4d29-92c4-8e27e6c920c7"
         userName={user.email}
-        userSecret={user.uid} 
+        userSecret={user.uid}
       ></ChatEngine>
     </div>
   );
